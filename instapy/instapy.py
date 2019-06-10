@@ -211,8 +211,8 @@ class InstaPy:
         self.like_percentage = 0
         self.smart_hashtags = []
         self.smart_location_hashtags = []
-
         self.dont_like = ['sex', 'nsfw']
+        self.dont_comment = ['rip', 'r.i.p']
         self.mandatory_words = []
         self.ignore_if_contains = []
         self.ignore_users = []
@@ -531,6 +531,23 @@ class InstaPy:
 
         return self
 
+    def set_dont_comment(self, tags=None):
+        """Changes the possible restriction tags, if one of this
+         words is in the description, the image won't be comment but user
+         still might be unfollowed"""
+        if self.aborting:
+            return self
+
+        if not isinstance(tags, list):
+            self.logger.warning('Unable to use your set_dont_comment '
+                                'configuration!')
+            self.aborting = True
+
+        self.dont_comment = tags or []
+
+        return self
+    
+    
     def set_mandatory_words(self, tags=None):
         """Changes the possible restriction tags, if all of this
          hashtags is in the description, the image will be liked"""
